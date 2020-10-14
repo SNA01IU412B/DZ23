@@ -4,6 +4,8 @@
 
 void RightMatrix (int* mas, int m, int n);
 
+int ConnectedGr (int ver, int reb);
+
 int main(void){
     int *a;
     int i, j, n, m;
@@ -17,7 +19,7 @@ int main(void){
     printf("Ammount of connections:\n");
     scanf("%d", &n);
 
-    a = (int*)malloc(n*m * sizeof(int));
+    a = (int*)malloc(m*n * sizeof(int));
 
     for (i = 0; i<n; i++)
     {
@@ -30,11 +32,14 @@ int main(void){
 
     RightMatrix(a, m, n);
 
+    if (ConnectedGr(m, n) == 1) printf("Connected (only if simple)");
+    else printf("Not connected (only if simple)");
+
     fl = fopen("DZ2.dot", "w+");
 
-    fputs("graph G {\n", fl);
-
     if(fl == NULL) exit(000);
+
+    fputs("graph G {\n", fl);
 
     for (i = 0; i<n; i++)
     {
@@ -81,4 +86,11 @@ void RightMatrix (int* mas, int m, int n){
         }
         sch = 0;
     }
+}
+
+int ConnectedGr (int ver, int reb){
+    int p = 0;
+    p = ((ver-1)*(ver-2))/2;
+    if (reb > p) return 1;
+    else return 0;
 }
